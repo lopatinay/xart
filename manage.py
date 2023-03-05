@@ -2,7 +2,7 @@ import click
 import uvicorn
 
 from service_api.configs import RuntimeConfig
-# from service_api.domain.user_account.use_cases import create_super_admin
+from service_api.repository.user import init_users
 
 
 @click.group()
@@ -23,10 +23,9 @@ def _runserver(host, port, debug):
     uvicorn.run("service_api.app:fast_app", **conf)
 
 
-# @cli.command("create_super_admin")
-# @click.option("-p", "--password", default="john@wick.cont")
-# def _create_super_admin(password):
-#     create_super_admin(password)
+@cli.command("init_users")
+def _init_users():
+    init_users()
 
 
 if __name__ == "__main__":

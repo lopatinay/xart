@@ -11,6 +11,7 @@ SQLAlchemy-Utils==0.40.0
 
 
 # Tools
+passlib==1.7.4
 arrow==1.2.3
 httpx==0.23.3
 click==8.1.3

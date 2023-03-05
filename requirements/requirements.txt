@@ -44,6 +44,8 @@ mako==1.2.4
     # via alembic
 markupsafe==2.1.2
     # via mako
+passlib==1.7.4
+    # via -r requirements/requirements.in
 psycopg2-binary==2.9.5
     # via aiopg
 pydantic==1.10.5

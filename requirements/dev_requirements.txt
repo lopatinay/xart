@@ -77,6 +77,8 @@ packaging==23.0
     #   black
     #   build
     #   pytest
+passlib==1.7.4
+    # via -r requirements/requirements.txt
 pathspec==0.11.0
     # via black
 pip-tools==6.12.2
