@@ -17,6 +17,11 @@ class _AppConfig(BaseSettings):
     debug: bool = True
     base_dir: PosixPath = Path(__file__).resolve().parent.parent
 
+    # Cryptography
+    jwt_secret_key: str = "e03d0fd0e0d69ebdd8b9556525ef7bf1803a57d0b4867a3dc519d1a1f57b5d1e"
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+
     # Database
     pg_host: str = "localhost"
     ph_port: str = "5435"
