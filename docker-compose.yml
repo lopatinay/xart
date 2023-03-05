@@ -1,0 +1,12 @@
+version: "3"
+
+
+services:
+  postgres:
+    image: bitnami/postgresql:15
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=postgres
+    ports:
+      - "5435:5432"

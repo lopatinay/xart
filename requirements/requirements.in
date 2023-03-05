@@ -1,0 +1,16 @@
+# Framework
+fastapi==0.92.0
+uvicorn==0.20.0
+
+
+# Database
+aiopg==1.4.0
+SQLAlchemy==2.0.4
+alembic==1.9.4
+SQLAlchemy-Utils==0.40.0
+
+
+# Tools
+arrow==1.2.3
+httpx==0.23.3
+click==8.1.3
