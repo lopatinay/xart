@@ -1,9 +1,11 @@
 import enum
+import os
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import ChoiceType
 
+from service_api.configs import RuntimeConfig
 from service_api.models import BaseModel
 from service_api.models.challenge import ChallengeModel
 from service_api.models.product import ProductModel
@@ -24,20 +26,18 @@ class VotingModel(BaseModel):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    status: Mapped[str] = mapped_column(
-        ChoiceType(VotingStatuses), default=VotingStatuses.IN_PROGRESS
-    )
+    status: Mapped[str] = mapped_column(ChoiceType(VotingStatuses), nullable=True)
 
-    author_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
+    author_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"), nullable=True)
     author: Mapped[UserModel] = relationship(backref="votes")
 
     snapshot_id: Mapped[int] = mapped_column(ForeignKey("snapshot.id", ondelete="CASCADE"))
-    snapshot: Mapped[SnapshotModel] = relationship(backref="votes")
+    snapshot: Mapped[SnapshotModel] = relationship(back_populates="votes", lazy="joined")
 
-    product_id: Mapped[int] = mapped_column(ForeignKey("product.id", ondelete="CASCADE"))
-    product: Mapped[ProductModel] = relationship(backref="votes")
+    product_id: Mapped[int] = mapped_column(ForeignKey("product.id", ondelete="CASCADE"), nullable=True)
+    product: Mapped[ProductModel] = relationship(backref="votes", lazy="joined")
 
-    challenge_id: Mapped[int] = mapped_column(ForeignKey("challenge.id", ondelete="CASCADE"))
+    challenge_id: Mapped[int] = mapped_column(ForeignKey("challenge.id", ondelete="CASCADE"), nullable=True)
     challenge: Mapped[ChallengeModel] = relationship(backref="votes")
 
     def __repr__(self) -> str:

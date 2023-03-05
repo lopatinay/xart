@@ -15,7 +15,7 @@ class _AppConfig(BaseSettings):
     app_runtime_id: str = f"{app_name}::{uuid4()})"
     app_env: str = AppEnvs.localhost
     debug: bool = True
-    base_dir: PosixPath = Path(__file__).resolve().parent.parent
+    base_dir: PosixPath = Path(__file__).resolve().parent
 
     # Cryptography
     jwt_secret_key: str = "e03d0fd0e0d69ebdd8b9556525ef7bf1803a57d0b4867a3dc519d1a1f57b5d1e"
@@ -36,6 +36,11 @@ class _AppConfig(BaseSettings):
 
     # Tools
     log_level: str = "DEBUG"
+
+    # Assets
+    challenge_backend_dir = base_dir.joinpath("assets", "challenge_backend")
+    products_dir = challenge_backend_dir.joinpath("challenge_products")
+    snapshots_dir = challenge_backend_dir.joinpath("challenge_snapshots")
 
 
 RuntimeConfig = _AppConfig()

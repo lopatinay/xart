@@ -22,11 +22,11 @@ _psql_engine = create_engine(
     max_overflow=RuntimeConfig.pg_max_overflow,
 )
 
-_session = sessionmaker(autocommit=False, autoflush=False, bind=_psql_engine)
+db_session = sessionmaker(autocommit=False, autoflush=False, bind=_psql_engine)
 
 
 def db_conn():
-    session = _session()
+    session = db_session()
     try:
         yield session
     finally:

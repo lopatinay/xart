@@ -1,19 +1,18 @@
 from sqlalchemy.exc import IntegrityError
 
 from service_api.models import UserModel
-from service_api.repository.base import BaseRepo
 from service_api.services.logger import app_logger
 
 
-class UserRepo(BaseRepo):
+class UserRepo:
     pass
 
 
 def init_users():
     from service_api.models.user import UserRoles
-    from service_api.services.database import db_conn
+    from service_api.services import db_session
 
-    conn = next(db_conn())
+    conn = db_session()
 
     admin = UserModel(email="admin@xart.com", role=UserRoles.ADMIN, password="password")
 
