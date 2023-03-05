@@ -33,7 +33,7 @@ def create_challenge(
 
 @voting_router.get(
     "/voting",
-    response_model=List[schema.VotingResponse]
+    response_model=List[schema.AllVotingResponse]
 )
 def create_challenge(
     db: Session = Depends(db_conn),

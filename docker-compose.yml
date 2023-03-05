@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 
 services:
@@ -10,3 +10,32 @@ services:
       - POSTGRESQL_DATABASE=postgres
     ports:
       - "5435:5432"
+
+  service:
+    &service
+    build: .
+    image: xart/service:latest
+    depends_on:
+      postgres:
+        condition: service_started
+    environment:
+      - pg_host=postgres
+      - ph_port=5432
+
+  migration:
+    <<: *service
+    command: make migrate
+
+  backend:
+    <<: *service
+    ports:
+      - "9000:9000"
+    command: python manage.py runserver
+
+  init_users:
+    <<: *service
+    command: python manage.py init_users
+
+  populate_data:
+    <<: *service
+    command: python manage.py populate_data

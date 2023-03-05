@@ -7,7 +7,7 @@ RUN apt-get update &&  \
 
 WORKDIR /app
 COPY . .
-RUN pip install -r requirements.txt
+RUN pip install -r requirements/requirements.txt
 
 EXPOSE 8000
 

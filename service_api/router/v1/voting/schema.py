@@ -17,6 +17,16 @@ class Product(BaseModel):
         orm_mode = True
 
 
+class AllVotingResponse(BaseModel):
+    id: int
+    status: VotingStatuses
+    product: Product
+    snapshot: Product
+
+    class Config:
+        orm_mode = True
+
+
 class VotingResponse(BaseModel):
     id: int
     status: VotingStatuses
