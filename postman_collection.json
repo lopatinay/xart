@@ -28,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"kevin@xart.com\",\n    \"password\": \"password\"\n}",
+							"raw": "{\n    \"email\": \"qa3@xart.com\",\n    \"password\": \"password\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46,7 +46,158 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Kevin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"kevin@xart.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api}}/auth/token",
+									"host": [
+										"{{api}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "QA 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"qa2@xart.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api}}/auth/token",
+									"host": [
+										"{{api}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@xart.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api}}/auth/token",
+									"host": [
+										"{{api}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "QA 3",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"qa3@xart.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api}}/auth/token",
+									"host": [
+										"{{api}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "QA 4",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"qa4@xart.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api}}/auth/token",
+									"host": [
+										"{{api}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		},
@@ -86,6 +237,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Challenge result",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/challenges/1/results",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"challenges",
+								"1",
+								"results"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -99,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"product_id\": 4,\n    \"snapshot_id\": 1854,\n    \"decision\": true\n}",
+							"raw": "{\n    \"product_id\": 1,\n    \"snapshot_id\": 5,\n    \"decision\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -148,6 +318,25 @@
 							"path": [
 								"voting",
 								"next"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "To group review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/voting/5/to-group-review",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"voting",
+								"5",
+								"to-group-review"
 							]
 						}
 					},

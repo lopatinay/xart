@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import PasswordType, EmailType, ChoiceType
 
 from service_api.models import BaseModel
@@ -20,6 +20,8 @@ class UserModel(BaseModel):
     password: Mapped[str] = mapped_column(PasswordType(
         schemes=["pbkdf2_sha512", "md5_crypt"], deprecated=["md5_crypt"]
     ))
+
+    votes: Mapped["VotingModel"] = relationship(back_populates="author")
 
     role: Mapped[str] = mapped_column(ChoiceType(UserRoles), default=UserRoles.QA)
 

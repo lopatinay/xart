@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+from service_api.models import UserRoles
 from service_api.models.voting import VotingStatuses
 
 
@@ -20,6 +21,24 @@ class Product(BaseModel):
 class AllVotingResponse(BaseModel):
     id: int
     status: VotingStatuses
+    product: Product
+    snapshot: Product
+
+    class Config:
+        orm_mode = True
+
+
+class ExtraVotingAuthorResponse(BaseModel):
+    email: str
+    role: UserRoles
+
+    class Config:
+        orm_mode = True
+
+
+class ExtraVotingResponse(BaseModel):
+    id: int
+    author: ExtraVotingAuthorResponse
     product: Product
     snapshot: Product
 

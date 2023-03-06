@@ -1,4 +1,4 @@
-from sqlalchemy import func
+from sqlalchemy import func, desc
 
 from service_api.models import ChallengeModel, VotingModel, SnapshotModel, ProductModel
 from service_api.models.voting import VotingStatuses
@@ -7,6 +7,33 @@ from service_api.repository.base import BaseRepo
 
 class ChallengeRepo(BaseRepo):
     model = ChallengeModel
+
+    def get_results(self, challenge_id):
+        results = self.db.query(
+            func.count(VotingModel.author_id).label("majority"),
+            VotingModel.snapshot_id,
+            VotingModel.product_id,
+            VotingModel.status,
+        ).filter(
+            VotingModel.challenge_id == challenge_id,
+        ).group_by(
+            VotingModel.snapshot_id,
+            VotingModel.product_id,
+            VotingModel.status
+        ).order_by(
+            desc("majority")
+        ).all()
+
+        response = []
+        for majority, snapshot_id, product_id, status in results:
+            response.append({
+                "majority": majority,
+                "snapshot_id": snapshot_id,
+                "product_id": majority,
+                "status": status,
+            })
+
+        return response
 
     def finish_challenge(self, current_user):
         self.db.query(

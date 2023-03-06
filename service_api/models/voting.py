@@ -1,11 +1,9 @@
 import enum
-import os
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import ChoiceType
 
-from service_api.configs import RuntimeConfig
 from service_api.models import BaseModel
 from service_api.models.challenge import ChallengeModel
 from service_api.models.product import ProductModel
@@ -17,8 +15,6 @@ class VotingStatuses(str, enum.Enum):
     IN_PROGRESS = "IN_PROGRESS"
     MATCH = "MATCH"
     UNMATCH = "UNMATCH"
-    GROUP_REVIEW = "GROUP_REVIEW"
-    GROUP_FINISHED = "GROUP_FINISHED"
 
 
 class VotingModel(BaseModel):
@@ -29,7 +25,7 @@ class VotingModel(BaseModel):
     status: Mapped[str] = mapped_column(ChoiceType(VotingStatuses), nullable=True)
 
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"), nullable=True)
-    author: Mapped[UserModel] = relationship(backref="votes")
+    author: Mapped[UserModel] = relationship(uselist=False, back_populates="votes")
 
     snapshot_id: Mapped[int] = mapped_column(ForeignKey("snapshot.id", ondelete="CASCADE"))
     snapshot: Mapped[SnapshotModel] = relationship(back_populates="votes", lazy="joined")
@@ -42,15 +38,3 @@ class VotingModel(BaseModel):
 
     def __repr__(self) -> str:
         return f"<Voting(id={self.id}, author_id={self.author_id}, status={self.status.value})>"
-
-
-class MajorityReviewersModel(BaseModel):
-    __tablename__ = "majority_reviewers"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
-    user: Mapped[UserModel] = relationship(backref="majority_reviewers")
-
-    voting_id: Mapped[int] = mapped_column(ForeignKey("voting.id", ondelete="CASCADE"))
-    voting: Mapped[VotingModel] = relationship(backref="majority_reviewers")

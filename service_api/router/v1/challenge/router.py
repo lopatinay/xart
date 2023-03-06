@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from service_api.domain.auth.authentication import get_current_user
@@ -22,7 +24,15 @@ def create_challenge(
 ):
     repo = ChallengeRepo(db)
     use_case = ChallengeUseCases(repo)
-    return use_case.create(current_user)
+    challenge = use_case.create(current_user)
+
+    if challenge is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You already have an active challenge",
+        )
+
+    return challenge
 
 
 @challenge_router.get(
@@ -35,4 +45,33 @@ def create_challenge(
 ):
     repo = ChallengeRepo(db)
     use_case = ChallengeUseCases(repo)
-    return use_case.get_active_challenge(current_user)
+    challenge = use_case.get_active_challenge(current_user)
+
+    if challenge is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="No active challenge",
+        )
+
+    return challenge
+
+
+@challenge_router.get(
+    "/challenges/{challenge_id}/results",
+    response_model=List[schema.ChallengeResultsResponse]
+)
+def create_challenge(
+    challenge_id: int,
+    db: Session = Depends(db_conn),
+):
+    repo = ChallengeRepo(db)
+    use_case = ChallengeUseCases(repo)
+    challenge = use_case.get_results(challenge_id)
+
+    if challenge is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="No active challenge",
+        )
+
+    return challenge

@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from service_api.models.voting import VotingStatuses
+
 
 class ChallengeResponse(BaseModel):
     id: int
@@ -9,3 +11,10 @@ class ChallengeResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ChallengeResultsResponse(BaseModel):
+    majority: int
+    snapshot_id: int
+    product_id: int
+    status: VotingStatuses

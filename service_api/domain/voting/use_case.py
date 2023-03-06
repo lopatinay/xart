@@ -1,7 +1,10 @@
-from fastapi import HTTPException, status
-
+from service_api.models import UserRoles
 from service_api.repository.challenge import ChallengeRepo
 from service_api.repository.voting import VotingRepo
+
+
+class VotingPermissionDeniedError(Exception):
+    pass
 
 
 class VotingUseCases:
@@ -25,8 +28,12 @@ class VotingUseCases:
     def get(self, current_user):
         next_voting = self.voting_repo.get(current_user)
         if next_voting is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Active challenge not found",
-            )
+            self.challenge_repo.finish_challenge(current_user)
+            return
         return next_voting
+
+    def to_group_review(self, current_user, voting_id):
+        if current_user.role != UserRoles.ADMIN:
+            raise VotingPermissionDeniedError("You cannot change voting status")
+
+        return self.voting_repo.to_group_review(voting_id)
